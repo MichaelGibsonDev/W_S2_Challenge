@@ -6,23 +6,94 @@
   <script id="challenge">
     // 👉 CHALLENGE 1
     function profileActivation(profile, reason) {
-
+      if (profile.active === true) {
+        if (!reason) {
+          return "confirm status manually"
+        }
+        profile.active = false;
+        profile.reason = reason;
+      } else {
+        profile.active = true;
+        delete profile.reason;
+      }
+      return profile;
     }
 
     // 👉 CHALLENGE 2
     function mineSweeper(grid, x, y) {
+      if (x < 1 || x > 3 || y < 1 || y > 3) {
+        return "invalid coordinates"
+      }
+      let spot = grid[y - 1][x - 1];
 
+      if (spot === "🟥") {
+        return "🟥 💀"
+      }
+
+      if (spot === "🟦") {
+        return "🟦 🥳"
+      }
     }
 
     // 👉 CHALLENGE 3
     function booleanize(obj) {
-
+      for (let prop in obj) {
+        if (prop.length > 9) {
+          return "shorten all prop names to 9 chars or less"
+        }
+      }
+      let keys = Object.keys(obj);
+      for (let i = 0; i < keys.length; i++) {
+        let key = keys[i];
+      if (obj[key] === 0) {
+        obj[key] = false;
+      } else if (obj[key] === 1) {
+        obj[key] = true;
+      } else if (obj[key] === null) {
+        delete obj[key];
+      }
     }
+    return obj;
+  }
 
     // 👉 CHALLENGE 4
     function scrub(text, forbidden) {
+      if (!text || forbidden.length === 0) {
+        return text;
+      }
 
+      let cleanChars = [];
+      for (let i = 0; i < text.length; i++) {
+        let ch = text[i];
+
+        if (
+          (ch >= "a" && ch <= "z") ||
+          (ch >= "A" && ch <= "Z") ||
+          (ch >= "0" && ch <= "9") ||
+          ch === " "
+        ) {
+          cleanChars.push(ch);
+      }
     }
+
+    let cleanText = cleanChars.join("");
+
+    let words = cleanText.split(" ");
+    let result = [];
+
+    for(let i = 0; i < words.length; i++)  {
+      if(forbidden.indexOf(words[i]) !== -1) {
+        xArr = [];
+        for (let j = 0; j < words[i].length; j++) {
+          xArr.push("x")
+        }
+        result.push(xArr.join(""));
+      } else {
+        result.push(words[i]);
+      }
+    }
+    return result.join(" ");
+  }
 
     // 👉 CHALLENGE 5 (bonus, NOT graded)
     function normalizePhoneNumber(num) {
